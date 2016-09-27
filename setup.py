@@ -42,6 +42,6 @@ setup(
     description='REST datastore for Flask-Security',
     long_description=get_long_description(),
     install_requires=get_requirements(),
-    tests_require=get_requirements(),
+    tests_require=get_requirements('-dev'),
     cmdclass={'test': PyTest},
 )

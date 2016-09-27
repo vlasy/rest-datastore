@@ -1,7 +1,7 @@
 import requests
 from flask_security.datastore import Datastore, UserDatastore
 from flask_security.utils import get_identity_attributes
-from flask.ext.security import UserMixin, RoleMixin
+from flask_security import UserMixin, RoleMixin
 
 
 class RESTModel(dict):

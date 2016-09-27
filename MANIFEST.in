@@ -1,5 +1,6 @@
 include README.md
 include requirements.txt
+include requirements-dev.txt
 include tox.ini
 recursive-include tests *
 recursive-exclude tests/__pycache__ *
