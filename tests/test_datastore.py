@@ -155,3 +155,21 @@ def test_delete_user(app, datastore):
     datastore.commit()
     user = datastore.find_user(email='matt@lp.com')
     assert user is None
+
+
+def test_find_or_create_user(app, datastore):
+    init_app_with_options(app, datastore)
+
+    role = datastore.find_role('admin')
+    datastore.commit()
+
+    user = datastore.create_user(email='dude@lp.com', username='dude',
+                                 password='password', roles=[role])
+
+    found = datastore.find_or_create_user(email="dude@lp.com")
+    assert found['id'] is user['id']
+    assert found['roles'][0]['name'] == role['name']
+
+    userB = datastore.find_or_create_user(email="johndoe@lp.com")
+    foundB = datastore.find_or_create_user(email="johndoe@lp.com")
+    assert userB['id'] is foundB['id']

@@ -86,6 +86,10 @@ class RESTDatastore(Datastore):
             backup_roles = list(model['roles'])
             model['roles'] = []  # prevent roles from being sent with user
         res = requests.post(self._url + '/' + model.url, json=model)
+        if res.status_code != 201:
+            print(res.status_code)
+            print(res.json())
+            return None
         model['id'] = res.json()['id']
         if backup_roles:
             for role in backup_roles:
@@ -141,3 +145,6 @@ class RESTUserDatastore(RESTDatastore, UserDatastore):
         # TODO: ok - this just works but its ugly!
         query = {"where": "name==" + name}
         return self.get(RoleModel, query)
+
+    def find_or_create_user(self, **kwargs):
+        return self.find_user(**kwargs) or self.create_user(**kwargs)
