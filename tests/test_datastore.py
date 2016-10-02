@@ -167,9 +167,9 @@ def test_find_or_create_user(app, datastore):
                                  password='password', roles=[role])
 
     found = datastore.find_or_create_user(email="dude@lp.com")
-    assert found['id'] is user['id']
-    assert found['roles'][0]['name'] == role['name']
+    assert found.id is user.id
+    assert found.roles[0].name == role.name
 
     userB = datastore.find_or_create_user(email="johndoe@lp.com")
     foundB = datastore.find_or_create_user(email="johndoe@lp.com")
-    assert userB['id'] is foundB['id']
+    assert userB.id is foundB.id

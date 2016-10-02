@@ -37,7 +37,11 @@ class RESTDatastore(Datastore):
     def get(self, model, params):
         result = requests.get(self._url + '/' + model.url, params=params)
         if result.json()['_meta']['total'] > 0:
-            return model(result.json()['_items'][0])
+            data = result.json()['_items'][0]
+            item = model(data)
+            if 'roles' in data:
+                item.roles = [RoleModel(role) for role in item.roles]
+            return item
         return None
 
     def _prepare_role_modify_args(self, user, role):
